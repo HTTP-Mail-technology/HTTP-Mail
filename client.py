@@ -1,7 +1,8 @@
 import sys
 import requests
-from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QTextEdit, QPushButton, QListWidget, QMessageBox, QInputDialog
+from PyQt6.QtGui import QIcon, QPixmap
+from time import sleep
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QTextEdit, QPushButton, QListWidget, QMessageBox, QInputDialog, QSplashScreen
 
 class MailClientApp(QWidget):
     def __init__(self):
@@ -9,7 +10,7 @@ class MailClientApp(QWidget):
 
         self.setWindowTitle("HTTP Mail Client")
         self.setWindowIcon(QIcon('icon_.ico'))
-        self.setGeometry(100, 100, 600, 400)
+        self.setGeometry(100, 100, 800, 600)
         
         self.server_url = self.get_server_url()
 
@@ -33,6 +34,10 @@ class MailClientApp(QWidget):
         self.message_entry = QTextEdit(self)
         self.message_entry.setPlaceholderText("Message")
         form_layout.addWidget(self.message_entry)
+        
+        self.about_button = QPushButton("About", self)
+        self.about_button.clicked.connect(self.about)
+        form_layout.addWidget(self.about_button)
 
         self.send_button = QPushButton("Send Mail", self)
         self.send_button.clicked.connect(self.send_mail)
@@ -55,6 +60,9 @@ class MailClientApp(QWidget):
         layout.addWidget(self.mails_listbox)
 
         self.setLayout(layout)
+        
+    def about(self):
+        QMessageBox.about(self, "About", "HTTP Mail Project. Created by 'HTTP Mail Technology' on Github!")
 
     def send_mail(self):
         from_ = self.from_email.text()
@@ -127,6 +135,10 @@ class MailClientApp(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    splash = QSplashScreen(QPixmap('splash.png'))
+    splash.show()
+    sleep(3)
+    splash.close()
     window = MailClientApp()
     window.show()
     sys.exit(app.exec())

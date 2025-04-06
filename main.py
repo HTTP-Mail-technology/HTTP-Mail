@@ -42,7 +42,7 @@ def send_mail():
         
         for from__ in mails:
             if from_ == from__:
-                return jsonify({"status": "ERROR", "message": "This email is already in use"})
+                return jsonify({"status": "ERROR", "message": "This email is already in use"}), 400
         
         # Генерируем уникальный ID для нового письма
         message_id = str(uuid.uuid4())

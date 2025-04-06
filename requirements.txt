@@ -1,0 +1,6 @@
+PyQt6
+flask
+requests
+datetime
+uuid
+flask_cors
